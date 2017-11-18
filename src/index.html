@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Students DB</title>
+        <style>
+            body *{
+                font-family: monospace;
+            }
+        </style>
+        <script>
+            //window.setTimeout(()=>{location.reload()}, 3000);
+            window.onload = () =>{
+                let xhr = new XMLHttpRequest();
+                let root = document.getElementById("root");
+                let error = "An unexpected error occured";
+                xhr.onerror = ()=>{alert(error)}
+                xhr.onload = ()=>{
+                    let status = JSON.parse(xhr.responseText);
+                    if(status.on){
+                        root.innerHTML = "<span>Server is taking attendance...</span><br/>";
+                        let stopbt = document.createElement("button");
+                        stopbt.innerHTML = 'Turn off';
+                        stopbt.onclick = ()=>{
+                            let xhrTurnOff = new XMLHttpRequest();
+                            xhrTurnOff.onload = ()=>{
+                                setTimeout(()=>{location.reload()},500);
+                            }
+                            xhrTurnOff.onerror = () =>{alert(error)}
+                            xhrTurnOff.open("PUT", "/db/attendance");
+                            xhrTurnOff.send(JSON.stringify({action: false}));
+                        }
+                        
+                        root.appendChild(stopbt);
+                        
+                        let att = document.createElement("button");
+                        att.innerHTML = "Attendance table";
+                        att.onclick = () =>{
+                            window.open("/attendance", "_SELF");
+                        }
+                        root.appendChild(att);
+                        
+                        let attT = document.createElement("button");
+                        attT.innerHTML = "Attendance table from Today";
+                        attT.onclick = () =>{
+                            window.open("/attendanceToday", "_SELF");
+                        }
+                        root.appendChild(attT);
+                        
+                    }else{
+                        root.innerHTML = "<span>Server is not taking attendance...</span><br/>";
+                        let startbt = document.createElement("button");
+                        startbt.innerHTML = "Take attendance";
+                        startbt.onclick = () =>{
+                            let xhrTurnOn = new XMLHttpRequest();
+                            xhrTurnOn.onerror = ()=>{alert(error)}
+                            xhrTurnOn.onload = () =>{
+                                setTimeout(()=>{location.reload()},500);
+                            }
+                            xhrTurnOn.open("PUT", "/db/attendance");
+                            xhrTurnOn.send(JSON.stringify({action: true}));
+                        }
+                        root.appendChild(startbt);
+                        
+                        let modDB = document.createElement("button");
+                        modDB.innerHTML = "Modify Database";
+                        modDB.onclick = () =>{
+                            window.open("/students", "_SELF");
+                        }
+                        root.appendChild(modDB);
+                        
+                        let modTag = document.createElement("button");
+                        modTag.innerHTML = "Modify Tag";
+                        modTag.onclick = () =>{
+                            window.open("/setTag", "_SELF");
+                        }
+                        root.appendChild(modTag);
+                        
+                        let att = document.createElement("button");
+                        att.innerHTML = "Attendance table";
+                        att.onclick = () =>{
+                            window.open("/attendance", "_SELF");
+                        }
+                        root.appendChild(att);
+                        
+                        let attT = document.createElement("button");
+                        attT.innerHTML = "Attendance table from Today";
+                        attT.onclick = () =>{
+                            window.open("/attendanceToday", "_SELF");
+                        }
+                        root.appendChild(attT);
+                    }
+                }
+                xhr.open("PUT", "/db/attendance");
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.send(JSON.stringify({action: "ask"}));
+                
+            }
+        </script>
+    </head>
+    <body>
+        <div id="root" >
+            Loading...
+        </div>
+    </body>
+</html>

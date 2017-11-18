@@ -1,0 +1,114 @@
+<html>
+    <head>
+        <title>Students Table</title>
+        <style>
+            body * {
+                font-family: monospace;
+            }
+            table{
+                font-size: 15px;
+                background-color: #9696db;
+                table-layout: auto;
+                border-collapse: collapse;
+                border: 2px solid black;
+            }
+            td{
+                border: 2px solid black;
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+            table button{
+                background-color: red;
+                border: 2px solid black;
+                color: white;
+                cursor: pointer;
+            }
+            .panel{background-color: #cecece;}
+        </style>
+        <script>
+            window.onload = () =>{
+                function generateTable(data, target){
+                    let html = '';
+                    data.forEach((el)=>{
+                        html += '<tr>';
+                        for(let key in el){
+                            html+= '<td>'+el[key]+'</td>';
+                        }
+                        html+='<td><button class="removeButton" id="'+el.id+'">X</button></td>'
+                        html += '</tr>';
+                    })
+                    target.innerHTML = html;
+                    
+                    document.querySelectorAll(".removeButton").forEach((el)=>{
+                        el.onclick = () =>{
+                            removeStudent(el.id);
+                        }
+                    })
+                }
+                function removeStudent(id){
+                    let bt = document.getElementById(id);
+                    let row = bt.parentElement.parentElement;
+                    let xhr = new XMLHttpRequest();
+                    xhr.onloadend = () =>{
+                        if(xhr.status === 404) alert("Can't delete students with attendance history");
+                        else {
+                            row.parentElement.removeChild(row);
+                        }
+                    }
+                    
+                    xhr.open("DELETE", "/db");
+                    xhr.send(JSON.stringify({id}));
+                    
+                }
+                document.getElementById("addStudent").onclick = () =>{
+                    let ins = document.querySelectorAll(".panel input");
+                    let id= ins[0].value;
+                    let name = ins[1].value;
+                    
+                    let xhr = new XMLHttpRequest();
+                    xhr.onloadend = () =>{
+                        if(xhr.status == 200){
+                            target.innerHTML += '<tr><td>'+id+'</td><td>'+name+'</td></tr>'
+                        }else{
+                            alert("ERROR");
+                        }
+                    }
+                    xhr.open("POST", "/db");
+                    xhr.send(JSON.stringify({id:id,name:name}));
+                }
+                let xhr = new XMLHttpRequest();
+                let target =document.getElementById("target");
+                xhr.onload = () =>{
+                    let data = JSON.parse(xhr.responseText);
+                    console.log(data);
+                    generateTable(data,target);
+                }
+                xhr.open("GET", "/db");
+                xhr.send();
+            }
+        </script>
+    </head>
+    <body>
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                </tr>
+            </thead>
+            <tbody id="target" >
+                
+            </tbody>
+        </table>
+        <br/>
+        <div class="panel">
+            <span>ID:</span><br/>
+            <input type="number" max="99999999">
+            <br/>
+            <span>Name:</span><br/>
+            <input type="text" >
+            <br/>
+            <button id=addStudent >Add Student</button>
+        </div>
+    </body>
+</html>

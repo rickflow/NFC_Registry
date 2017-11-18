@@ -1,0 +1,5 @@
+{
+    "com": "COM3",
+    "baudRate": 115200,
+    "database": "database.db"
+}
