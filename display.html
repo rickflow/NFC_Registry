@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <style>
+            body{
+                margin:0 !important;
+            }
+            #screen{
+                width: 100vw;
+                height: 100vh;
+            }
+        </style>
+        <script>
+            const BGCOLOR = "#12181f"
+            const ERRORCOLOR = "#9d0303"
+            const SUCCESSCOLOR = "#19b519"
+            const PARTIALSUCCESSCOLOR = "#345191"
+            window.onload = ()=>{
+                sse = new EventSource("/api/")
+                screen = document.getElementById("screen")
+                screen.style.backgroundColor = BGCOLOR
+                timeout = null
+                
+                putColor = (color) =>{
+                    screen.style.backgroundColor = "black"
+                    setTimeout(()=>{screen.style.backgroundColor = color}, 50)
+                    if(timeout)
+                        clearTimeout(timeout)
+                    timeout = setTimeout(()=>{
+                        screen.style.backgroundColor = BGCOLOR
+                        timeout = null
+                    }, 1000 )
+                }
+                
+                sse.onmessage = e=>{
+                    console.log(e.data)
+                    switch(e.data){
+                        case "fail":
+                            putColor(ERRORCOLOR)
+                            break
+                        case "success":
+                            putColor(SUCCESSCOLOR)
+                            break
+                        case "already":
+                            putColor(PARTIALSUCCESSCOLOR)
+                            break
+                        default:
+                            break
+                    }
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div id="screen"></div>
+    </body>
+</html>

@@ -1,5 +1,11 @@
 {
-    "com": "COM3",
-    "baudRate": 115200,
-    "database": "database.db"
+	"COM": 6,
+	"baudRate": 115200,
+	"cmdchar": "?",
+	"timeout": 6000,
+	"server":{
+		"port":8080,
+		"host":"localhost"
+	},
+	"public_folder": "public"
 }

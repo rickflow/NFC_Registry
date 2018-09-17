@@ -1,15 +1,16 @@
 {
-  "name": "attendancenfc",
-  "version": "0.0.1",
-  "description": "School project",
+  "name": "nfc_registry",
+  "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "start": "start http://www.localhost:8080 & start http://www.localhost:8899 & node index.js"
   },
-  "author": "Ricardo Romero Flores",
+  "author": "Ricardo Romero",
   "license": "ISC",
   "dependencies": {
-    "serialport": "^6.0.4",
-    "sqlite3": "^3.1.13"
+    "npm": "^6.4.1",
+    "serialport": "^6.2.1",
+    "sqlite3": "^4.0.1"
   }
 }
