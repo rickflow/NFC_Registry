@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "start http://www.localhost:8080 & start http://www.localhost:8899 & node index.js"
+    "start": "node index.js"
   },
   "author": "Ricardo Romero",
   "license": "ISC",

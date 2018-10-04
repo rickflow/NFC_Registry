@@ -1,11 +1,14 @@
 {
-	"COM": 6,
-	"baudRate": 115200,
-	"cmdchar": "?",
-	"timeout": 6000,
-	"server":{
-		"port":8080,
-		"host":"localhost"
-	},
-	"public_folder": "public"
+    "SERIALPORT": "COM3",
+    "baudRate": 115200,
+    "cmdchar": "?",
+    "timeout": 6000,
+    "server":{
+	"port":8080,
+	"host":"localhost"
+    },
+    "display":{
+	"port":8899
+    },
+    "public_folder": "public"
 }

@@ -5,9 +5,9 @@ The system allows to store an ID in each tag and to store IDs with a specific na
 * Node.JS >= 8
 * Arduino UNO
 * Any NTAG2xx tag
-* A Windows computer
+* A  computer (Windows, OSX, Linux)
 * [Adafruit PN532 Library for the Arduino](https://github.com/adafruit/Adafruit-PN532)
-## Installation ans usage
+## Installation
 1. Clone this repository.
 ```
 git clone https://github.com/rickflow/NFC_Registry.git
@@ -17,10 +17,14 @@ git clone https://github.com/rickflow/NFC_Registry.git
 npm install
 ```
 3. Compile and upload Assist2.ino to the Arduino. This step requires [this library](https://github.com/adafruit/Adafruit-PN532).
-4. Modify config.json and set COM to your Arduino's COM port.
+4. Modify config.json and set SERIALPORT to your Arduino's COM port (Windows) or path(OSX, Linux).
 5. Run
 ```
 npm start
+```
+6. Open your favorite web browser, preferably Google Chrome, in the specified ports.
+```
+http://localhost:<PORTNUMBER>
 ```
 ## Dependencies
 * [Adafruit PN532 Library for the Arduino](https://github.com/adafruit/Adafruit-PN532)
